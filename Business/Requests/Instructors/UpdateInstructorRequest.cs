@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Business.Requests.Users;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +11,6 @@ namespace Business.Requests.Instructors
     {
         public int Id { get; set; }
         public string CompanyName { get; set; }
+        public UpdateUserRequest updateUserRequest { get; set; }
     }
 }

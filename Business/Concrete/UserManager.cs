@@ -25,11 +25,12 @@ namespace Business.Concrete
             _userBusinessRules = userBusinessRules;
         }
 
-        public void Add(CreateUserRequest request)
+        public User Add(CreateUserRequest request)
         {
             User user = _mapper.Map<User>(request);
-            _userBusinessRules.CheckIfUserExist(user);
+            _userBusinessRules.CheckIfUserNationalIdentityNotExist(user.NationalIdentity);
             _userDal.Add(user);
+            return user;
         }
 
         public void Delete(DeleteUserRequest request)

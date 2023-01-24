@@ -10,5 +10,7 @@ namespace DataAccess.Abstract
 {
     public interface IInstructorDal : IEntityRepository<Instructor>
     {
+        List<Instructor> GetAllWithUser();
+        Instructor InstructorGetByIdWithUser(int id);
     }
 }

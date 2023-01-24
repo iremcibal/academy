@@ -2,9 +2,12 @@
 using Business.Abstract;
 using Business.BusinessRules;
 using Business.Requests.Applicants;
+using Business.Requests.Users;
 using Business.Responses.Applicants;
+using Business.Responses.Users;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,32 +21,41 @@ namespace Business.Concrete
         IApplicantDal _applicantDal;
         IMapper _mapper;
         ApplicantBusinessRules _applicantBusinessRules;
-        public ApplicantManager(IApplicantDal applicantDal, IMapper mapper, ApplicantBusinessRules applicantBusinessRules)
+        UserBusinessRules _userBusinessRules;
+        IUserService _userService;
+        public ApplicantManager(IApplicantDal applicantDal, IMapper mapper, ApplicantBusinessRules applicantBusinessRules, UserBusinessRules userBusinessRules, IUserService userService)
         {
             this._applicantDal = applicantDal;
             this._mapper = mapper;
             this._applicantBusinessRules = applicantBusinessRules;
+            _userBusinessRules = userBusinessRules;
+            _userService = userService;
         }
 
         public void Add(CreateApplicantRequest request)
         {
+            _userBusinessRules.CheckIfUserNationalIdentityNotExist(request.CreateUser.NationalIdentity);
+            CreateUserRequest userRequest = _mapper.Map<CreateUserRequest>(request.CreateUser);
+            var user = _userService.Add(userRequest);
             Applicant applicant = _mapper.Map<Applicant>(request);
-            _applicantBusinessRules.CheckIfApplicantExist(applicant);
-            
+            applicant.Id = user.Id;
+
             _applicantDal.Add(applicant);
         }
 
         public void Delete(DeleteApplicantRequest request)
         {
             Applicant applicant = _mapper.Map<Applicant>(request);
-            _applicantBusinessRules.CheckIfApplicantNotExist(applicant.Id);
-
             _applicantDal.Delete(applicant);
+
+
+            DeleteUserRequest userRequest = new DeleteUserRequest() { Id=request.Id};
+            _userService.Delete(userRequest);
         }
 
         public GetApplicantResponse GetById(int id)
         {
-            Applicant applicant = _applicantDal.Get(a=>a.Id== id);
+            Applicant applicant = _applicantDal.ApplicantGetByIdWithUser(id);
             var response = _mapper.Map<GetApplicantResponse>(applicant);
 
             return response;
@@ -51,7 +63,7 @@ namespace Business.Concrete
 
         public List<ListApplicantResponse> GetList()
         {
-            List<Applicant> applicants = _applicantDal.GetAll();
+            List<Applicant> applicants = _applicantDal.GetAllWithUser();
             List<ListApplicantResponse> responses = _mapper.Map<List<ListApplicantResponse>>(applicants);
 
             return responses;
@@ -60,9 +72,11 @@ namespace Business.Concrete
 
         public void Update(UpdateApplicantRequest request)
         {
-            Applicant applicant = _mapper.Map<Applicant>(request);
-            _applicantBusinessRules.CheckIfApplicantNotExist(applicant);
+            _userBusinessRules.CheckIfUserNationalIdentityExist(request.UpdateUser.NationalIdentity);
+            UpdateUserRequest updateUser = _mapper.Map<UpdateUserRequest>(request.UpdateUser);
+            _userService.Update(updateUser);
 
+            Applicant applicant = _mapper.Map<Applicant>(request);
             _applicantDal.Update(applicant);
         }
     }

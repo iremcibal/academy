@@ -26,6 +26,11 @@ namespace Business.BusinessRules
         public void CheckIfUserNationalIdentityNotExist(string nationalIdentityId)
         {
             User user = _userDal.Get(n => n.NationalIdentity == nationalIdentityId);
+            CheckIfUserExist(user);
+        }
+        public void CheckIfUserNationalIdentityExist(string nationalIdentityId)
+        {
+            User user = _userDal.Get(n => n.NationalIdentity == nationalIdentityId);
             CheckIfUserNotExist(user);
         }
     }

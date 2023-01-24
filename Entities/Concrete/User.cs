@@ -17,5 +17,8 @@ namespace Entities.Concrete
         public string Email { get; set; }
         public string Password { get; set; }
         
+        public virtual Applicant Applicant { get; set; }
+        public virtual Employee Employee { get; set; }
+        public virtual Instructor Instructor { get; set; }
     }
 }

@@ -10,5 +10,7 @@ namespace DataAccess.Abstract
 {
     public interface IApplicantDal : IEntityRepository<Applicant>
     {
+        List<Applicant> GetAllWithUser();
+        Applicant ApplicantGetByIdWithUser(int id);
     }
 }

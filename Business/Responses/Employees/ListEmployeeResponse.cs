@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Business.Responses.Users;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +11,6 @@ namespace Business.Responses.Employees
     {
         public int Id { get; set; }
         public string Position { get; set; }
+        public ListUserResponse User { get; set; }
     }
 }

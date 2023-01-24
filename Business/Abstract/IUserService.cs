@@ -1,5 +1,6 @@
 ﻿using Business.Requests.Users;
 using Business.Responses.Users;
+using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Business.Abstract
     {
         GetUserResponse GetById(int id);
         List<ListUserResponse> GetList();
-        void Add(CreateUserRequest request);
+        User Add(CreateUserRequest request);
         void Delete(DeleteUserRequest request);
         void Update(UpdateUserRequest request);
     }
