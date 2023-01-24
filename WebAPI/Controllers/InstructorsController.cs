@@ -44,8 +44,8 @@ namespace WebAPI.Controllers
         }
 
 
-        [HttpDelete("{Id}")]
-        public void Delete([FromRoute] DeleteInstructorRequest request)
+        [HttpDelete]
+        public void Delete([FromBody] DeleteInstructorRequest request)
         {
             _instructorService.Delete(request);
         }

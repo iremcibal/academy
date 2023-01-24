@@ -29,14 +29,14 @@ namespace Business.Concrete
         public void Add(CreateStateRequest request)
         {
             State state = _mapper.Map<State>(request);
-            _stateBusinessRules.CheckIfStateExist(state);
+            _stateBusinessRules.CheckIfStateNotExist(state);
             _stateDal.Add(state);
         }
 
         public void Delete(DeleteStateRequest request)
         {
             State state = _mapper.Map<State>(request);
-            _stateBusinessRules.CheckIfStateNotExist(state);
+            _stateBusinessRules.CheckIfStateExist(state);
             _stateDal.Delete(state);
         }
 

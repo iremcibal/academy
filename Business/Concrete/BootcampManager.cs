@@ -28,7 +28,7 @@ namespace Business.Concrete
         public void Add(CreateBootcampRequest request)
         {
             Bootcamp bootcamp = _mapper.Map<Bootcamp>(request);
-            _bootcampBusinessRules.CheckIfBootcampExist(bootcamp);
+            _bootcampBusinessRules.CheckIfBootcampNotExist(bootcamp);
             _bootcampDal.Add(bootcamp);
         }
 

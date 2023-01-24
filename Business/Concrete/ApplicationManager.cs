@@ -29,14 +29,14 @@ namespace Business.Concrete
         public void Add(CreateApplicationRequest request)
         {
             Application application = _mapper.Map<Application>(request);
-            _applicationBusinessRules.CheckIfApplicationExist(application);
+            _applicationBusinessRules.CheckIfApplicationNotExist(application);
             _applicationDal.Add(application);
         }
 
         public void Delete(DeleteApplicationRequest request)
         {
             Application application= _mapper.Map<Application>(request);
-            _applicationBusinessRules.CheckIfApplicationNotExist(application);
+            _applicationBusinessRules.CheckIfApplicationExist(application);
             _applicationDal.Delete(application);
         }
 

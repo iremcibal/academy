@@ -71,7 +71,7 @@ namespace DataAccess.Concrete.EntityFramework.Context
             modelBuilder.Entity<Bootcamp>(b =>
             {
                 b.ToTable("bootcamps").HasKey("Id");
-                b.Property(b => b.Id).HasColumnName("id");
+                b.Property(b => b.Id).HasColumnName("Id");
                 b.Property(b => b.Name).HasColumnName("name");
                 b.Property(b => b.State).HasColumnName("state");
                 b.Property(b => b.StartDate).HasColumnName("start_date");
