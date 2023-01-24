@@ -8,6 +8,7 @@ namespace Business.Requests.Blacklists
 {
     public class CreateBlacklistRequest
     {
+        public int Id { get; set; }
         public DateTime? date { get; set; }
         public string Reason { get; set; }
         public int ApplicantId { get; set; }

@@ -29,14 +29,14 @@ namespace Business.Concrete
         public void Add(CreateBlacklistRequest request)
         {
             Blacklist blacklist = _mapper.Map<Blacklist>(request);
-            _blacklistBusinessRules.CheckIfBlacklistExist(blacklist);
+            _blacklistBusinessRules.CheckIfBlacklistNotExist(blacklist);
             _blacklistDal.Add(blacklist);
         }
 
         public void Delete(DeleteBlacklistRequest request)
         {
             Blacklist blacklist = _mapper.Map<Blacklist>(request);
-            _blacklistBusinessRules.CheckIfBlacklistNotExist(blacklist);
+            _blacklistBusinessRules.CheckIfBlacklistExist(blacklist);
             _blacklistDal.Delete(blacklist);
         }
 
