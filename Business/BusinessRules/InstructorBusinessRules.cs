@@ -1,4 +1,6 @@
-﻿using DataAccess.Abstract;
+﻿using Business.Constants;
+using Core.Business.Exceptions;
+using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -17,11 +19,11 @@ namespace Business.BusinessRules
         }
         public void CheckIfInstructorNotExist(Instructor? instructor)
         {
-            if (instructor == null) throw new Exception("Instructor not be exist");
+            if (instructor == null) throw new BusinessException(Messages.InstructorNotBeExist);
         }
         public void CheckIfInstructorExist(Instructor? instructor)
         {
-            if (instructor != null) throw new Exception("Instructor already exist");
+            if (instructor != null) throw new BusinessException(Messages.InstructorAlreadyExist);
         }
         public void CheckIfInstructorNotExist(int instructorId)
         {

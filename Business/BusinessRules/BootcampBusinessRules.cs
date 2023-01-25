@@ -1,4 +1,6 @@
-﻿using DataAccess.Abstract;
+﻿using Business.Constants;
+using Core.Business.Exceptions;
+using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -18,12 +20,12 @@ namespace Business.BusinessRules
 
         public void CheckIfBootcampNotExist(Bootcamp? bootcamp)
         {
-            if (bootcamp == null) throw new Exception("Bootcamp not be exist");
+            if (bootcamp == null) throw new BusinessException(Messages.BootcampNotBeExist);
 
         }
         public void CheckIfBootcampExist(Bootcamp? bootcamp) 
         {
-            if (bootcamp != null) throw new Exception("Bootcamp already exist");
+            if (bootcamp != null) throw new BusinessException(Messages.BootcampAlreadyExist);
         }
 
         public void CheckIfBootcampNotExist(int bootcampId)

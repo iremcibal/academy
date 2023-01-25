@@ -1,4 +1,6 @@
-﻿using DataAccess.Abstract;
+﻿using Business.Constants;
+using Core.Business.Exceptions;
+using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -18,12 +20,12 @@ namespace Business.BusinessRules
 
         public void CheckIfBlacklistNotExist(Blacklist? blacklist)
         {
-            if (blacklist == null) throw new Exception("Blacklist not be exist");
+            if (blacklist == null) throw new BusinessException(Messages.BlacklistNotBeExist);
         }
 
         public void CheckIfBlacklistExist(Blacklist? blacklist)
         {
-            if (blacklist != null) throw new Exception("Blacklist already exist");
+            if (blacklist != null) throw new BusinessException(Messages.BlacklistAlreadyExist);
         }
 
         public void CheckIfBlacklistNotExist(int blacklistId)

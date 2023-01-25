@@ -1,4 +1,6 @@
-﻿using DataAccess.Abstract;
+﻿using Business.Constants;
+using Core.Business.Exceptions;
+using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -17,11 +19,11 @@ namespace Business.BusinessRules
         }
         public void CheckIfStateNotExist(State? state)
         {
-            if (state == null) throw new Exception("State not be exist");
+            if (state == null) throw new BusinessException(Messages.StateNotBeExist);
         }
         public void CheckIfStateExist(State? state)
         {
-            if (state != null) throw new Exception("State already exist");
+            if (state != null) throw new BusinessException(Messages.StateAlreadyExist);
         }
         public void CheckIfStateNotExist(int stateId)
         {

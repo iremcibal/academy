@@ -1,4 +1,6 @@
-﻿using DataAccess.Abstract;
+﻿using Business.Constants;
+using Core.Business.Exceptions;
+using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -19,12 +21,12 @@ namespace Business.BusinessRules
 
         public void CheckIfApplicationNotExist(Application? application)
         {
-            if (application == null) throw new Exception("Application not be exist");
+            if (application == null) throw new BusinessException(Messages.ApplicationNotBeExist);
            
         }
         public void CheckIfApplicationExist(Application? application)
         {
-            if (application != null) throw new Exception("Application already exist");
+            if (application != null) throw new BusinessException(Messages.ApplicationAlreadyExist);
             
         }
 
