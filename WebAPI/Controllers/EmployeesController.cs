@@ -17,37 +17,40 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public List<ListEmployeeResponse> GetList()
+        public IActionResult GetList()
         {
-            List<ListEmployeeResponse> result = _employeeService.GetList();
-            return result;
+            var result = _employeeService.GetList();
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
 
         [HttpGet("{id}")]
-        public GetEmployeeResponse GetById(int id)
+        public IActionResult GetById(int id)
         {
-            GetEmployeeResponse response = _employeeService.GetById(id);
-            return response;
+            var result = _employeeService.GetById(id);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
         [HttpPost]
-        public void Add(CreateEmployeeRequest request)
+        public IActionResult Add(CreateEmployeeRequest request)
         {
-            _employeeService.Add(request);
+            var result = _employeeService.Add(request);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
         [HttpPut]
-        public void Update(UpdateEmployeeRequest request)
+        public IActionResult Update(UpdateEmployeeRequest request)
         {
-            _employeeService.Update(request);
+            var result =_employeeService.Update(request);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
 
         [HttpDelete]
-        public void Delete([FromBody] DeleteEmployeeRequest request)
+        public IActionResult Delete([FromBody] DeleteEmployeeRequest request)
         {
-            _employeeService.Delete(request);
+            var result = _employeeService.Delete(request);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
     }
 }

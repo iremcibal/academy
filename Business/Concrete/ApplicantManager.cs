@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using Business.Abstract;
 using Business.BusinessRules;
+using Business.Constants;
 using Business.Requests.Applicants;
 using Business.Requests.Users;
 using Business.Responses.Applicants;
 using Business.Responses.Users;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
@@ -32,18 +34,19 @@ namespace Business.Concrete
             _userService = userService;
         }
 
-        public void Add(CreateApplicantRequest request)
+        public IResult Add(CreateApplicantRequest request)
         {
             _userBusinessRules.CheckIfUserNationalIdentityNotExist(request.CreateUser.NationalIdentity);
             CreateUserRequest userRequest = _mapper.Map<CreateUserRequest>(request.CreateUser);
             var user = _userService.Add(userRequest);
             Applicant applicant = _mapper.Map<Applicant>(request);
             applicant.Id = user.Id;
-
             _applicantDal.Add(applicant);
+
+            return new SuccessResult(Messages.AddedData) ;
         }
 
-        public void Delete(DeleteApplicantRequest request)
+        public IResult Delete(DeleteApplicantRequest request)
         {
             Applicant applicant = _mapper.Map<Applicant>(request);
             _applicantDal.Delete(applicant);
@@ -51,26 +54,28 @@ namespace Business.Concrete
 
             DeleteUserRequest userRequest = new DeleteUserRequest() { Id=request.Id};
             _userService.Delete(userRequest);
+
+            return new SuccessResult(Messages.DeletedData);
         }
 
-        public GetApplicantResponse GetById(int id)
+        public IDataResult<GetApplicantResponse> GetById(int id)
         {
             Applicant applicant = _applicantDal.ApplicantGetByIdWithUser(id);
             var response = _mapper.Map<GetApplicantResponse>(applicant);
 
-            return response;
+            return new SuccessDataResult<GetApplicantResponse>(response,Messages.ListedData);
         }
 
-        public List<ListApplicantResponse> GetList()
+        public IDataResult<List<ListApplicantResponse>> GetList()
         {
             List<Applicant> applicants = _applicantDal.GetAllWithUser();
             List<ListApplicantResponse> responses = _mapper.Map<List<ListApplicantResponse>>(applicants);
 
-            return responses;
+            return new SuccessDataResult<List<ListApplicantResponse>>(responses,Messages.ListedData);
 
         }
 
-        public void Update(UpdateApplicantRequest request)
+        public IResult Update(UpdateApplicantRequest request)
         {
             _userBusinessRules.CheckIfUserNationalIdentityExist(request.UpdateUser.NationalIdentity);
             UpdateUserRequest updateUser = _mapper.Map<UpdateUserRequest>(request.UpdateUser);
@@ -78,6 +83,8 @@ namespace Business.Concrete
 
             Applicant applicant = _mapper.Map<Applicant>(request);
             _applicantDal.Update(applicant);
+
+            return new SuccessResult(Messages.UpdatedData);
         }
     }
 }

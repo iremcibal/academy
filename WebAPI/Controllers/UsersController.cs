@@ -17,37 +17,40 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public List<ListUserResponse> GetList()
+        public IActionResult GetList()
         {
-            List<ListUserResponse> result = _userService.GetList();
-            return result;
+            var result = _userService.GetList();
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
 
         [HttpGet("{id}")]
-        public GetUserResponse GetById(int id)
+        public IActionResult GetById(int id)
         {
-            GetUserResponse response = _userService.GetById(id);
-            return response;
+            var result = _userService.GetById(id);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
         [HttpPost]
-        public void Add(CreateUserRequest request)
+        public IActionResult Add(CreateUserRequest request)
         {
-            _userService.Add(request);
+            var result =_userService.Add(request);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
         [HttpPut]
-        public void Update(UpdateUserRequest request)
+        public IActionResult Update(UpdateUserRequest request)
         {
-            _userService.Update(request);
+            var result = _userService.Update(request);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
 
         [HttpDelete("{Id}")]
-        public void Delete([FromRoute] DeleteUserRequest request)
+        public IActionResult Delete([FromRoute] DeleteUserRequest request)
         {
-            _userService.Delete(request);
+            var result = _userService.Delete(request);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
     }
 }

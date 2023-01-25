@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Business.Abstract;
 using Business.BusinessRules;
+using Business.Constants;
 using Business.Requests.Users;
 using Business.Responses.Users;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -33,32 +35,35 @@ namespace Business.Concrete
             return user;
         }
 
-        public void Delete(DeleteUserRequest request)
+        public IResult Delete(DeleteUserRequest request)
         {
             User user = _mapper.Map<User>(request);
             _userBusinessRules.CheckIfUserNotExist(user);
             _userDal.Delete(user);
+
+            return new SuccessResult(Messages.AddedData);
         }
 
-        public GetUserResponse GetById(int id)
+        public IDataResult<GetUserResponse> GetById(int id)
         {
             User user = _userDal.Get(u=>u.Id == id);
             var response = _mapper.Map<GetUserResponse>(user);
-            return response;
+            return new SuccessDataResult<GetUserResponse>(response,Messages.ListedData);
         }
 
-        public List<ListUserResponse> GetList()
+        public IDataResult<List<ListUserResponse>> GetList()
         {
             List<User> users = _userDal.GetAll();
             List<ListUserResponse> responses = _mapper.Map<List<ListUserResponse>>(users);
-            return responses;
+            return new SuccessDataResult<List<ListUserResponse>>(responses,Messages.ListedData);
         }
 
-        public void Update(UpdateUserRequest request)
+        public IResult Update(UpdateUserRequest request)
         {
             User user = _mapper.Map<User>(request);
             _userBusinessRules.CheckIfUserNotExist(user);
             _userDal.Update(user);
+            return new SuccessResult(Messages.UpdatedData);
         }
     }
 }

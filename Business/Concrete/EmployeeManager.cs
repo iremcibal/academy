@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Business.Abstract;
 using Business.BusinessRules;
+using Business.Constants;
 using Business.Requests.Employees;
 using Business.Requests.Users;
 using Business.Responses.Employees;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -30,7 +32,7 @@ namespace Business.Concrete
             _userService = userService;
         }
 
-        public void Add(CreateEmployeeRequest request)
+        public IResult Add(CreateEmployeeRequest request)
         {
             _userBusinessRules.CheckIfUserNationalIdentityNotExist(request.createUser.NationalIdentity);
             CreateUserRequest createUserRequest = _mapper.Map<CreateUserRequest>(request.createUser);
@@ -39,9 +41,11 @@ namespace Business.Concrete
             employee.Id = user.Id;
 
             _employeeDal.Add(employee);
+
+            return new SuccessResult(Messages.AddedData);
         }
 
-        public void Delete(DeleteEmployeeRequest request)
+        public IResult Delete(DeleteEmployeeRequest request)
         {
             Employee employee = _mapper.Map<Employee>(request);
             _employeeBusinessRules.CheckIfEmployeeNotExist(employee);
@@ -50,23 +54,25 @@ namespace Business.Concrete
             DeleteUserRequest user = new DeleteUserRequest() { Id =request.Id };
             _userService.Delete(user);
 
+            return new SuccessResult(Messages.DeletedData);
+
         }
 
-        public GetEmployeeResponse GetById(int id)
+        public IDataResult<GetEmployeeResponse> GetById(int id)
         {
             Employee employee = _employeeDal.EmployeeGetByIdWithUser(id);
             var response = _mapper.Map<GetEmployeeResponse>(employee);
-            return response;
+            return new SuccessDataResult<GetEmployeeResponse>(response,Messages.ListedData);
         }
 
-        public List<ListEmployeeResponse> GetList()
+        public IDataResult<List<ListEmployeeResponse>> GetList()
         {
             List<Employee> employees = _employeeDal.GetAllWithUser();
             List<ListEmployeeResponse> responses = _mapper.Map<List<ListEmployeeResponse>>(employees);
-            return responses;
+            return new SuccessDataResult<List<ListEmployeeResponse>>(responses,Messages.ListedData);
         }
 
-        public void Update(UpdateEmployeeRequest request)
+        public IResult Update(UpdateEmployeeRequest request)
         {
             _userBusinessRules.CheckIfUserNationalIdentityExist(request.userRequest.NationalIdentity);
             UpdateUserRequest updateUser = _mapper.Map<UpdateUserRequest>(request.userRequest);
@@ -74,6 +80,8 @@ namespace Business.Concrete
 
             Employee employee = _mapper.Map<Employee>(request);
             _employeeDal.Update(employee);
+
+            return new SuccessResult(Messages.UpdatedData);
         }
     }
 }

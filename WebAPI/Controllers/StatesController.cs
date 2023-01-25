@@ -3,6 +3,7 @@ using Business.Requests.Applicants;
 using Business.Requests.States;
 using Business.Responses.Applicants;
 using Business.Responses.States;
+using Core.Utilities.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,37 +20,40 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public List<ListStateResponse> GetList()
+        public IActionResult GetList()
         {
-            List<ListStateResponse> result = _stateService.GetList();
-            return result;
+            var result = _stateService.GetList();
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
 
         [HttpGet("{id}")]
-        public GetStateResponse GetById(int id)
+        public IActionResult GetById(int id)
         {
-            GetStateResponse response = _stateService.GetById(id);
-            return response;
+            var result = _stateService.GetById(id);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
         [HttpPost]
-        public void Add(CreateStateRequest request)
+        public IActionResult Add(CreateStateRequest request)
         {
-            _stateService.Add(request);
+            var result =_stateService.Add(request);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
         [HttpPut]
-        public void Update(UpdateStateRequest request)
+        public IActionResult Update(UpdateStateRequest request)
         {
-            _stateService.Update(request);
+            var result =_stateService.Update(request);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
 
         [HttpDelete]
-        public void Delete([FromBody] DeleteStateRequest request)
+        public IActionResult Delete([FromBody] DeleteStateRequest request)
         {
-            _stateService.Delete(request);
+            var result = _stateService.Delete(request);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Business.Requests.Applicants;
 using Business.Responses.Applicants;
+using Core.Utilities.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,10 @@ namespace Business.Abstract
 {
     public interface IApplicantService
     {
-        GetApplicantResponse GetById(int id);
-        List<ListApplicantResponse> GetList();
-        void Add(CreateApplicantRequest request);
-        void Delete(DeleteApplicantRequest request);
-        void Update(UpdateApplicantRequest request);
+        IDataResult<GetApplicantResponse> GetById(int id);
+        IDataResult<List<ListApplicantResponse>> GetList();
+        IResult Add(CreateApplicantRequest request);
+        IResult Delete(DeleteApplicantRequest request);
+        IResult Update(UpdateApplicantRequest request);
     }
 }

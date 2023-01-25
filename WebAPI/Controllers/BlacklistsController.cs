@@ -3,6 +3,7 @@ using Business.Requests.Applicants;
 using Business.Requests.Blacklists;
 using Business.Responses.Applicants;
 using Business.Responses.Blacklists;
+using Core.Utilities.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,37 +20,40 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public List<ListBlacklistResponse> GetList()
+        public IActionResult GetList()
         {
-            List<ListBlacklistResponse> result = _blacklistService.GetList();
-            return result;
+            var result = _blacklistService.GetList();
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
 
         [HttpGet("{id}")]
-        public GetBlacklistResponse GetById(int id)
+        public IActionResult GetById(int id)
         {
-            GetBlacklistResponse response = _blacklistService.GetById(id);
-            return response;
+            var result = _blacklistService.GetById(id);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
         [HttpPost]
-        public void Add(CreateBlacklistRequest request)
+        public IActionResult Add(CreateBlacklistRequest request)
         {
-            _blacklistService.Add(request);
+            var result = _blacklistService.Add(request);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
         [HttpPut]
-        public void Update(UpdateBlacklistRequest request)
+        public IActionResult Update(UpdateBlacklistRequest request)
         {
-            _blacklistService.Update(request);
+            var result = _blacklistService.Update(request);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
 
         [HttpDelete]
-        public void Delete([FromBody] DeleteBlacklistRequest request)
+        public IActionResult Delete([FromBody] DeleteBlacklistRequest request)
         {
-            _blacklistService.Delete(request);
+            var result = _blacklistService.Delete(request);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
     }
 }

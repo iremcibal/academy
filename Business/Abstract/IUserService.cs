@@ -1,5 +1,6 @@
 ﻿using Business.Requests.Users;
 using Business.Responses.Users;
+using Core.Utilities.Results;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,10 @@ namespace Business.Abstract
 {
     public interface IUserService
     {
-        GetUserResponse GetById(int id);
-        List<ListUserResponse> GetList();
+        IDataResult<GetUserResponse> GetById(int id);
+        IDataResult<List<ListUserResponse>> GetList();
         User Add(CreateUserRequest request);
-        void Delete(DeleteUserRequest request);
-        void Update(UpdateUserRequest request);
+        IResult Delete(DeleteUserRequest request);
+        IResult Update(UpdateUserRequest request);
     }
 }

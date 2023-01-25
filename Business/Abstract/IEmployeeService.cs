@@ -1,5 +1,6 @@
 ﻿using Business.Requests.Employees;
 using Business.Responses.Employees;
+using Core.Utilities.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,10 @@ namespace Business.Abstract
 {
     public interface IEmployeeService
     {
-        GetEmployeeResponse GetById(int id);
-        List<ListEmployeeResponse> GetList();
-        void Add(CreateEmployeeRequest request);
-        void Delete(DeleteEmployeeRequest request);
-        void Update(UpdateEmployeeRequest request);
+        IDataResult<GetEmployeeResponse> GetById(int id);
+        IDataResult<List<ListEmployeeResponse>> GetList();
+        IResult Add(CreateEmployeeRequest request);
+        IResult Delete(DeleteEmployeeRequest request);
+        IResult Update(UpdateEmployeeRequest request);
     }
 }

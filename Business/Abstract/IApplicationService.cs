@@ -1,5 +1,6 @@
 ﻿using Business.Requests.Applications;
 using Business.Responses.Applications;
+using Core.Utilities.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,10 @@ namespace Business.Abstract
 {
     public interface IApplicationService
     {
-        GetApplicationResponse GetById(int id);
-        List<ListApplicationResponse> GetList();
-        void Add(CreateApplicationRequest request);
-        void Delete(DeleteApplicationRequest request);
-        void Update(UpdateApplicationRequest request);
+        IDataResult<GetApplicationResponse> GetById(int id);
+        IDataResult<List<ListApplicationResponse>> GetList();
+        IResult Add(CreateApplicationRequest request);
+        IResult Delete(DeleteApplicationRequest request);
+        IResult Update(UpdateApplicationRequest request);
     }
 }

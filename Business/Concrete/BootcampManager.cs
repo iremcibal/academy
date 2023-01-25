@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Business.Abstract;
 using Business.BusinessRules;
+using Business.Constants;
 using Business.Requests.Bootcamps;
 using Business.Responses.Bootcamps;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -25,39 +27,47 @@ namespace Business.Concrete
             _bootcampBusinessRules = bootcampBusinessRules;
         }
 
-        public void Add(CreateBootcampRequest request)
+        public IResult Add(CreateBootcampRequest request)
         {
             Bootcamp bootcamp = _mapper.Map<Bootcamp>(request);
             _bootcampBusinessRules.CheckIfBootcampNotExist(bootcamp);
             _bootcampDal.Add(bootcamp);
+
+            return new SuccessResult(Messages.AddedData);
         }
 
-        public void Delete(DeleteBootcampRequest request)
+        public IResult Delete(DeleteBootcampRequest request)
         {
             Bootcamp bootcamp = _mapper.Map<Bootcamp>(request);
             _bootcampBusinessRules.CheckIfBootcampNotExist(bootcamp);
             _bootcampDal.Delete(bootcamp);
+
+            return new SuccessResult(Messages.DeletedData);
         }
 
-        public GetBootcampResponse GetById(int id)
+        public IDataResult<GetBootcampResponse> GetById(int id)
         {
             Bootcamp bootcamp = _bootcampDal.Get(b=>b.Id== id);
             var response = _mapper.Map<GetBootcampResponse>(bootcamp);
-            return response;
+
+            return new SuccessDataResult<GetBootcampResponse>(response,Messages.ListedData);
         }
 
-        public List<ListBootcampResponse> GetList()
+        public IDataResult<List<ListBootcampResponse>> GetList()
         {
             List<Bootcamp> bootcamps = _bootcampDal.GetAll();
             List<ListBootcampResponse> responses = _mapper.Map<List<ListBootcampResponse>>(bootcamps);
-            return responses;
+
+            return new SuccessDataResult<List<ListBootcampResponse>>(responses,Messages.ListedData);
         }
 
-        public void Update(UpdateBootcampRequest request)
+        public IResult Update(UpdateBootcampRequest request)
         {
             Bootcamp bootcamp = _mapper.Map<Bootcamp>(request);
             _bootcampBusinessRules.CheckIfBootcampNotExist(bootcamp);
             _bootcampDal.Update(bootcamp);
+
+            return new SuccessResult(Messages.UpdatedData);
         }
     }
 }

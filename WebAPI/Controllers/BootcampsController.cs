@@ -3,6 +3,7 @@ using Business.Requests.Applicants;
 using Business.Requests.Bootcamps;
 using Business.Responses.Applicants;
 using Business.Responses.Bootcamps;
+using Core.Utilities.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,37 +20,40 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public List<ListBootcampResponse> GetList()
+        public IActionResult GetList()
         {
-            List<ListBootcampResponse> result = _bootcampService.GetList();
-            return result;
+            var result = _bootcampService.GetList();
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
 
         [HttpGet("{id}")]
-        public GetBootcampResponse GetById(int id)
+        public IActionResult GetById(int id)
         {
-            GetBootcampResponse response = _bootcampService.GetById(id);
-            return response;
+            var result = _bootcampService.GetById(id);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
         [HttpPost]
-        public void Add(CreateBootcampRequest request)
+        public IActionResult Add(CreateBootcampRequest request)
         {
-            _bootcampService.Add(request);
+            var result = _bootcampService.Add(request);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
         [HttpPut]
-        public void Update(UpdateBootcampRequest request)
+        public IActionResult Update(UpdateBootcampRequest request)
         {
-            _bootcampService.Update(request);
+            var result = _bootcampService.Update(request);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
 
         [HttpDelete]
-        public void Delete([FromBody] DeleteBootcampRequest request)
+        public IActionResult Delete([FromBody] DeleteBootcampRequest request)
         {
-            _bootcampService.Delete(request);
+            var result = _bootcampService.Delete(request);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
     }
 }

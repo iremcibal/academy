@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Business.Abstract;
 using Business.BusinessRules;
+using Business.Constants;
 using Business.Requests.Instructors;
 using Business.Requests.Users;
 using Business.Responses.Instructors;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -31,7 +33,7 @@ namespace Business.Concrete
             _userService = userService;
         }
 
-        public void Add(CreateInstructorRequest request)
+        public IResult Add(CreateInstructorRequest request)
         {
             _userBusinessRules.CheckIfUserNationalIdentityNotExist(request.CreateUser.NationalIdentity);
             CreateUserRequest userRequest = _mapper.Map<CreateUserRequest>(request.CreateUser);
@@ -39,32 +41,36 @@ namespace Business.Concrete
             Instructor ınstructor = _mapper.Map<Instructor>(request);
             ınstructor.Id = user.Id;
             _instructorDal.Add(ınstructor);
+
+            return new SuccessResult(Messages.AddedData);
         }
 
-        public void Delete(DeleteInstructorRequest request)
+        public IResult Delete(DeleteInstructorRequest request)
         {
             Instructor ınstructor = _mapper.Map<Instructor>(request);
             _instructorDal.Delete(ınstructor);
 
             DeleteUserRequest userRequest = new DeleteUserRequest() { Id = request.Id };
             _userService.Delete(userRequest);
+
+            return new SuccessResult(Messages.DeletedData);
         }
 
-        public GetInstructorResponse GetById(int id)
+        public IDataResult<GetInstructorResponse> GetById(int id)
         {
             Instructor ınstructor = _instructorDal.InstructorGetByIdWithUser(id);
             var response = _mapper.Map<GetInstructorResponse>(ınstructor);
-            return response;
+            return new SuccessDataResult<GetInstructorResponse>(response,Messages.ListedData);
         }
 
-        public List<ListInstructorResponse> GetList()
+        public IDataResult<List<ListInstructorResponse>> GetList()
         {
             List<Instructor> ınstructors = _instructorDal.GetAllWithUser();
             List<ListInstructorResponse> responses = _mapper.Map<List<ListInstructorResponse>>(ınstructors);
-            return responses;
+            return new SuccessDataResult<List<ListInstructorResponse>>(responses,Messages.ListedData);
         }
 
-        public void Update(UpdateInstructorRequest request)
+        public IResult Update(UpdateInstructorRequest request)
         {
             _userBusinessRules.CheckIfUserNationalIdentityExist(request.updateUserRequest.NationalIdentity);
             UpdateUserRequest updateUser = _mapper.Map<UpdateUserRequest>(request.updateUserRequest);
@@ -72,6 +78,8 @@ namespace Business.Concrete
 
             Instructor ınstructor = _mapper.Map<Instructor>(request);
             _instructorDal.Update(ınstructor);
+
+            return new SuccessResult(Messages.UpdatedData);
         }
     }
 }

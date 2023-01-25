@@ -17,37 +17,40 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public List<ListInstructorResponse> GetList()
+        public IActionResult GetList()
         {
-            List<ListInstructorResponse> result = _instructorService.GetList();
-            return result;
+            var result = _instructorService.GetList();
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
 
         [HttpGet("{id}")]
-        public GetInstructorResponse GetById(int id)
+        public IActionResult GetById(int id)
         {
-            GetInstructorResponse response = _instructorService.GetById(id);
-            return response;
+            var result = _instructorService.GetById(id);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
         [HttpPost]
-        public void Add(CreateInstructorRequest request)
+        public IActionResult Add(CreateInstructorRequest request)
         {
-            _instructorService.Add(request);
+            var result = _instructorService.Add(request);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
         [HttpPut]
-        public void Update(UpdateInstructorRequest request)
+        public IActionResult Update(UpdateInstructorRequest request)
         {
-            _instructorService.Update(request);
+            var result = _instructorService.Update(request);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
 
         [HttpDelete]
-        public void Delete([FromBody] DeleteInstructorRequest request)
+        public IActionResult Delete([FromBody] DeleteInstructorRequest request)
         {
-            _instructorService.Delete(request);
+            var result =_instructorService.Delete(request);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
     }
 }

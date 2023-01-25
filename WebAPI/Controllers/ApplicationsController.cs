@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Requests.Applications;
 using Business.Responses.Applications;
+using Core.Utilities.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,37 +18,40 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public List<ListApplicationResponse> GetList()
+        public IActionResult GetList()
         {
-            List<ListApplicationResponse> result = _applicationService.GetList();
-            return result;
+            var result = _applicationService.GetList();
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
 
         [HttpGet("{id}")]
-        public GetApplicationResponse GetById(int id)
+        public IActionResult GetById(int id)
         {
-            GetApplicationResponse response = _applicationService.GetById(id);
-            return response;
+            var result = _applicationService.GetById(id);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
         [HttpPost]
-        public void Add(CreateApplicationRequest request)
+        public IActionResult Add(CreateApplicationRequest request)
         {
-            _applicationService.Add(request);
+            var result = _applicationService.Add(request);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
         [HttpPut]
-        public void Update(UpdateApplicationRequest request)
+        public IActionResult Update(UpdateApplicationRequest request)
         {
-            _applicationService.Update(request);
+            var result = _applicationService.Update(request);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
 
         [HttpDelete]
-        public void Delete([FromBody] DeleteApplicationRequest request)
+        public IActionResult Delete([FromBody] DeleteApplicationRequest request)
         {
-            _applicationService.Delete(request);
+            var result =_applicationService.Delete(request);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
     }
 }

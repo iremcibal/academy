@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Requests.Applicants;
 using Business.Responses.Applicants;
+using Core.Utilities.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,37 +18,40 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public List<ListApplicantResponse> GetList()
+        public IActionResult GetList()
         {
-            List<ListApplicantResponse> result = _applicantService.GetList();
-            return result;
+            var result = _applicantService.GetList();
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
 
         [HttpGet("{id}")]
-        public GetApplicantResponse GetById(int id)
+        public IActionResult GetById(int id)
         {
-            GetApplicantResponse response = _applicantService.GetById(id);
-            return response;
+            var result = _applicantService.GetById(id);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
         [HttpPost]
-        public void Add(CreateApplicantRequest request)
+        public IActionResult Add(CreateApplicantRequest request)
         {
-            _applicantService.Add(request);
+            var result = _applicantService.Add(request);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
         [HttpPut]
-        public void Update(UpdateApplicantRequest request)
+        public IActionResult Update(UpdateApplicantRequest request)
         {
-            _applicantService.Update(request);
+            var result = _applicantService.Update(request);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
 
         [HttpDelete]
-        public void Delete([FromBody] DeleteApplicantRequest request)
+        public IActionResult Delete([FromBody] DeleteApplicantRequest request)
         {
-            _applicantService.Delete(request);
+            var result = _applicantService.Delete(request);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
     }
 }
