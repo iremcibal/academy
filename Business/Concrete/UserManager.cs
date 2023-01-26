@@ -4,6 +4,8 @@ using Business.BusinessRules;
 using Business.Constants;
 using Business.Requests.Users;
 using Business.Responses.Users;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -27,12 +29,13 @@ namespace Business.Concrete
             _userBusinessRules = userBusinessRules;
         }
 
-        public User Add(CreateUserRequest request)
+        [ValidationAspect(typeof(UserRequestValidator))]
+        public IDataResult<User> Add(CreateUserRequest request)
         {
             User user = _mapper.Map<User>(request);
             _userBusinessRules.CheckIfUserNationalIdentityNotExist(user.NationalIdentity);
             _userDal.Add(user);
-            return user;
+            return new SuccessDataResult<User>(Messages.AddedData);
         }
 
         public IResult Delete(DeleteUserRequest request)
@@ -41,7 +44,7 @@ namespace Business.Concrete
             _userBusinessRules.CheckIfUserNotExist(user);
             _userDal.Delete(user);
 
-            return new SuccessResult(Messages.AddedData);
+            return new SuccessResult(Messages.DeletedData);
         }
 
         public IDataResult<GetUserResponse> GetById(int id)

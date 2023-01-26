@@ -39,7 +39,7 @@ namespace Business.Concrete
             CreateUserRequest userRequest = _mapper.Map<CreateUserRequest>(request.CreateUser);
             var user = _userService.Add(userRequest);
             Instructor ınstructor = _mapper.Map<Instructor>(request);
-            ınstructor.Id = user.Id;
+            ınstructor.Id = user.Data.Id;
             _instructorDal.Add(ınstructor);
 
             return new SuccessResult(Messages.AddedData);

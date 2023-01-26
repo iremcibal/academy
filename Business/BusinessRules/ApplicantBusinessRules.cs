@@ -28,7 +28,7 @@ namespace Business.BusinessRules
 
         public void CheckIfApplicantExist(Applicant? applicant)
         {
-            if (applicant != null) throw new Exception(Messages.ApplicantAlreadyExist);
+            if (applicant != null) throw new BusinessException(Messages.ApplicantAlreadyExist);
         }
 
         public void CheckIfApplicantNotExist(int applicantId)

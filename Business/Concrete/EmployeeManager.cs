@@ -38,7 +38,7 @@ namespace Business.Concrete
             CreateUserRequest createUserRequest = _mapper.Map<CreateUserRequest>(request.createUser);
             var user = _userService.Add(createUserRequest);
             Employee employee = _mapper.Map<Employee>(request);
-            employee.Id = user.Id;
+            employee.Id = user.Data.Id;
 
             _employeeDal.Add(employee);
 

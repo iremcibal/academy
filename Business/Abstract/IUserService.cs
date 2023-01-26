@@ -14,7 +14,7 @@ namespace Business.Abstract
     {
         IDataResult<GetUserResponse> GetById(int id);
         IDataResult<List<ListUserResponse>> GetList();
-        User Add(CreateUserRequest request);
+        IDataResult<User> Add(CreateUserRequest request);
         IResult Delete(DeleteUserRequest request);
         IResult Update(UpdateUserRequest request);
     }

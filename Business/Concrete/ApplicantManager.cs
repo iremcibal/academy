@@ -40,7 +40,7 @@ namespace Business.Concrete
             CreateUserRequest userRequest = _mapper.Map<CreateUserRequest>(request.CreateUser);
             var user = _userService.Add(userRequest);
             Applicant applicant = _mapper.Map<Applicant>(request);
-            applicant.Id = user.Id;
+            applicant.Id = user.Data.Id;
             _applicantDal.Add(applicant);
 
             return new SuccessResult(Messages.AddedData) ;
