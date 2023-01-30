@@ -11,11 +11,12 @@ namespace Entities.Concrete
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string State { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int InstructorId { get; set; }
+        public int StateId { get; set; }
         public virtual Instructor Instructor { get; set; }
+        public virtual State State { get; set; }    
 
 
     }

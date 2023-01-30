@@ -43,7 +43,7 @@ namespace Business.Concrete
         public IResult Delete(DeleteBlacklistRequest request)
         {
             Blacklist blacklist = _mapper.Map<Blacklist>(request);
-            _blacklistBusinessRules.CheckIfBlacklistExist(blacklist);
+            _blacklistBusinessRules.CheckIfBlacklistNotExist(blacklist);
             _blacklistDal.Delete(blacklist);
 
             return new SuccessResult(Messages.DeletedData);

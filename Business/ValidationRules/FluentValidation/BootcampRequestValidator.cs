@@ -15,7 +15,7 @@ namespace Business.ValidationRules.FluentValidation
             RuleFor(b=>b.Name).NotEmpty();
             RuleFor(b=>b.StartDate).NotEmpty();
             RuleFor(b=>b.EndDate).NotEmpty();
-            RuleFor(b=>b.State).NotEmpty();
+            RuleFor(b=>b.StateId).NotEmpty();
             RuleFor(b=>b.InstructorId).NotEmpty();
         }
     }

@@ -1,11 +1,13 @@
 ﻿using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace DataAccess.Concrete.EntityFramework.Context
 {
@@ -22,7 +24,8 @@ namespace DataAccess.Concrete.EntityFramework.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-6HHUABE\MSSQLSERVER01;Database=academy;Integrated Security=True;TrustServerCertificate=True");
+            //optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-6HHUABE\MSSQLSERVER01;Database=academy;Integrated Security=True;TrustServerCertificate=True");
+            optionsBuilder.UseNpgsql("Host=localhost; Database=academy; Username=postgres; Password=12345");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -73,10 +76,11 @@ namespace DataAccess.Concrete.EntityFramework.Context
                 b.ToTable("bootcamps").HasKey("Id");
                 b.Property(b => b.Id).HasColumnName("Id");
                 b.Property(b => b.Name).HasColumnName("name");
-                b.Property(b => b.State).HasColumnName("state");
                 b.Property(b => b.StartDate).HasColumnName("start_date");
                 b.Property(b => b.EndDate).HasColumnName("end_date");
+                b.Property(b => b.StateId).HasColumnName("state_id");
                 b.Property(b => b.InstructorId).HasColumnName("instructor_id");
+                b.HasOne(b => b.State);
                 b.HasOne(b => b.Instructor);
             });
 
