@@ -4,6 +4,8 @@ using Business.BusinessRules;
 using Business.Constants;
 using Business.Requests.Bootcamps;
 using Business.Responses.Bootcamps;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -27,6 +29,7 @@ namespace Business.Concrete
             _bootcampBusinessRules = bootcampBusinessRules;
         }
 
+        [ValidationAspect(typeof(BootcampRequestValidator))]
         public IResult Add(CreateBootcampRequest request)
         {
             Bootcamp bootcamp = _mapper.Map<Bootcamp>(request);

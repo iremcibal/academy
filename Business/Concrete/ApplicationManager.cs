@@ -4,6 +4,8 @@ using Business.BusinessRules;
 using Business.Constants;
 using Business.Requests.Applications;
 using Business.Responses.Applications;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -28,6 +30,7 @@ namespace Business.Concrete
             _applicationBusinessRules = applicationBusinessRules;
         }
 
+        [ValidationAspect(typeof(ApplicationRequestValidator))]
         public IResult Add(CreateApplicationRequest request)
         {
             Application application = _mapper.Map<Application>(request);

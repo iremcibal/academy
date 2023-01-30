@@ -4,6 +4,8 @@ using Business.BusinessRules;
 using Business.Constants;
 using Business.Requests.States;
 using Business.Responses.States;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
@@ -28,6 +30,7 @@ namespace Business.Concrete
             _stateBusinessRules = stateBusinessRules;
         }
 
+        [ValidationAspect(typeof(StateRequestValidator))]
         public IResult Add(CreateStateRequest request)
         {
             State state = _mapper.Map<State>(request);

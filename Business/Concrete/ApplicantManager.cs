@@ -6,6 +6,8 @@ using Business.Requests.Applicants;
 using Business.Requests.Users;
 using Business.Responses.Applicants;
 using Business.Responses.Users;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -33,7 +35,8 @@ namespace Business.Concrete
             _userBusinessRules = userBusinessRules;
             _userService = userService;
         }
-
+        [ValidationAspect(typeof(UserRequestValidator))]
+        [ValidationAspect(typeof(ApplicantRequestValidator))]
         public IResult Add(CreateApplicantRequest request)
         {
             _userBusinessRules.CheckIfUserNationalIdentityNotExist(request.CreateUser.NationalIdentity);

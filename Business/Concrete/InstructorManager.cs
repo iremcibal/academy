@@ -5,6 +5,8 @@ using Business.Constants;
 using Business.Requests.Instructors;
 using Business.Requests.Users;
 using Business.Responses.Instructors;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -33,6 +35,8 @@ namespace Business.Concrete
             _userService = userService;
         }
 
+        [ValidationAspect(typeof(UserRequestValidator))]
+        [ValidationAspect(typeof(InstructorRequestValidator))]
         public IResult Add(CreateInstructorRequest request)
         {
             _userBusinessRules.CheckIfUserNationalIdentityNotExist(request.CreateUser.NationalIdentity);

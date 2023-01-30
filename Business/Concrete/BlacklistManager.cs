@@ -4,6 +4,8 @@ using Business.BusinessRules;
 using Business.Constants;
 using Business.Requests.Blacklists;
 using Business.Responses.Blacklists;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -28,6 +30,7 @@ namespace Business.Concrete
             _blacklistBusinessRules = blacklistBusinessRules;
         }
 
+        [ValidationAspect(typeof(BlacklistRequestValidator))]
         public IResult Add(CreateBlacklistRequest request)
         {
             Blacklist blacklist = _mapper.Map<Blacklist>(request);
