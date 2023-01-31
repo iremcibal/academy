@@ -54,6 +54,7 @@ namespace Business.Concrete
             return new SuccessDataResult<GetUserResponse>(response,Messages.ListedData);
         }
 
+        [CacheAspect(10)]
         public IDataResult<List<ListUserResponse>> GetList()
         {
             List<User> users = _userDal.GetAll();
