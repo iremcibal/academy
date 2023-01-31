@@ -36,6 +36,7 @@ namespace Business.Concrete
 
         [ValidationAspect(typeof(UserRequestValidator))]
         [ValidationAspect(typeof(EmployeeRequestValidator))]
+        [TransactionAspect]
         public IResult Add(CreateEmployeeRequest request)
         {
             _userBusinessRules.CheckIfUserNationalIdentityNotExist(request.createUser.NationalIdentity);
@@ -76,6 +77,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<ListEmployeeResponse>>(responses,Messages.ListedData);
         }
 
+        [ValidationAspect(typeof(UserRequestValidator))]
+        [ValidationAspect(typeof(EmployeeRequestValidator))]
+        [TransactionAspect]
         public IResult Update(UpdateEmployeeRequest request)
         {
             _userBusinessRules.CheckIfUserNationalIdentityExist(request.userRequest.NationalIdentity);

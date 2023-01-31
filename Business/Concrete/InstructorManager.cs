@@ -37,6 +37,7 @@ namespace Business.Concrete
 
         [ValidationAspect(typeof(UserRequestValidator))]
         [ValidationAspect(typeof(InstructorRequestValidator))]
+        [TransactionAspect]
         public IResult Add(CreateInstructorRequest request)
         {
             _userBusinessRules.CheckIfUserNationalIdentityNotExist(request.CreateUser.NationalIdentity);
@@ -73,7 +74,9 @@ namespace Business.Concrete
             List<ListInstructorResponse> responses = _mapper.Map<List<ListInstructorResponse>>(ınstructors);
             return new SuccessDataResult<List<ListInstructorResponse>>(responses,Messages.ListedData);
         }
-
+        [ValidationAspect(typeof(UserRequestValidator))]
+        [ValidationAspect(typeof(InstructorRequestValidator))]
+        [TransactionAspect]
         public IResult Update(UpdateInstructorRequest request)
         {
             _userBusinessRules.CheckIfUserNationalIdentityExist(request.updateUserRequest.NationalIdentity);

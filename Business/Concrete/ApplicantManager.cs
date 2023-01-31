@@ -35,8 +35,10 @@ namespace Business.Concrete
             _userBusinessRules = userBusinessRules;
             _userService = userService;
         }
+
         [ValidationAspect(typeof(UserRequestValidator))]
         [ValidationAspect(typeof(ApplicantRequestValidator))]
+        [TransactionAspect]
         public IResult Add(CreateApplicantRequest request)
         {
             _userBusinessRules.CheckIfUserNationalIdentityNotExist(request.CreateUser.NationalIdentity);
@@ -78,6 +80,9 @@ namespace Business.Concrete
 
         }
 
+        [ValidationAspect(typeof(UserRequestValidator))]
+        [ValidationAspect(typeof(ApplicantRequestValidator))]
+        [TransactionAspect]
         public IResult Update(UpdateApplicantRequest request)
         {
             _userBusinessRules.CheckIfUserNationalIdentityExist(request.UpdateUser.NationalIdentity);
