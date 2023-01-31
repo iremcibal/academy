@@ -52,7 +52,7 @@ namespace DataAccess.Concrete.EntityFramework.Context
             modelBuilder.Entity<Application>(a =>
             {
                 a.ToTable("applications").HasKey("Id");
-                a.Property(a => a.Id).HasColumnName("id");
+                a.Property(a => a.Id).HasColumnName("Id");
                 a.Property(a => a.StateId).HasColumnName("state_id");
                 a.Property(a => a.BootcampId).HasColumnName("bootcamp_id");
                 a.Property(a => a.ApplicantId).HasColumnName("applicant_id");

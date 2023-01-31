@@ -35,7 +35,7 @@ namespace Business.Concrete
             User user = _mapper.Map<User>(request);
             _userBusinessRules.CheckIfUserNationalIdentityNotExist(user.NationalIdentity);
             _userDal.Add(user);
-            return new SuccessDataResult<User>(Messages.AddedData);
+            return new SuccessDataResult<User>(user,Messages.AddedData);
         }
 
         public IResult Delete(DeleteUserRequest request)

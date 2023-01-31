@@ -33,5 +33,11 @@ namespace Business.BusinessRules
             Blacklist blacklist = _blacklistDal.Get(b=>b.Id == blacklistId);
             CheckIfBlacklistNotExist(blacklist);
         }
+
+        public void CheckIfBlacklistApplicantExist(int applicantId)
+        {
+            Blacklist blacklist = _blacklistDal.ApplicationGetByIdInBlacklist(applicantId);
+            if (blacklist != null) throw new BusinessException(Messages.HasNotBeAccepted);
+        }
     }
 }

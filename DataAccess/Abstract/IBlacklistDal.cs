@@ -10,5 +10,6 @@ namespace DataAccess.Abstract
 {
     public interface IBlacklistDal : IEntityRepository<Blacklist>
     {
+        public Blacklist ApplicationGetByIdInBlacklist(int id);
     }
 }

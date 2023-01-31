@@ -22,19 +22,22 @@ namespace Business.Concrete
         IApplicationDal _applicationDal;
         IMapper _mapper;
         ApplicationBusinessRules _applicationBusinessRules;
+        BlacklistBusinessRules _blacklistBusinessRules;
 
-        public ApplicationManager(IApplicationDal applicationDal, IMapper mapper, ApplicationBusinessRules applicationBusinessRules)
+        public ApplicationManager(IApplicationDal applicationDal, IMapper mapper, ApplicationBusinessRules applicationBusinessRules, BlacklistBusinessRules blacklistBusinessRules)
         {
             _applicationDal = applicationDal;
             _mapper = mapper;
             _applicationBusinessRules = applicationBusinessRules;
+            _blacklistBusinessRules = blacklistBusinessRules;
         }
 
         [ValidationAspect(typeof(ApplicationRequestValidator))]
         public IResult Add(CreateApplicationRequest request)
         {
             Application application = _mapper.Map<Application>(request);
-            _applicationBusinessRules.CheckIfApplicationNotExist(application);
+            _blacklistBusinessRules.CheckIfBlacklistApplicantExist(application.ApplicantId);
+            //_applicationBusinessRules.CheckIfApplicationNotExist(application);
             _applicationDal.Add(application);
 
             return new SuccessResult(Messages.AddedData);
