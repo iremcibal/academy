@@ -16,10 +16,10 @@ namespace WebAPI.Controllers
             _employeeService = employeeService;
         }
 
-        [HttpGet]
-        public IActionResult GetList()
+        [HttpGet("GetAll")]
+        public IActionResult GetAll()
         {
-            var result = _employeeService.GetList();
+            var result = _employeeService.GetAll();
             return StatusCode(result.Success ? 200 : 400, result);
         }
 

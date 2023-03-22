@@ -16,10 +16,10 @@ namespace WebAPI.Controllers
             _instructorService = instructorService;
         }
 
-        [HttpGet]
-        public IActionResult GetList()
+        [HttpGet("GetAll")]
+        public IActionResult GetAll()
         {
-            var result = _instructorService.GetList();
+            var result = _instructorService.GetAll();
             return StatusCode(result.Success ? 200 : 400, result);
         }
 

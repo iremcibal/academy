@@ -13,19 +13,5 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfEmployeeDal : EfEntityRepositoryBase<Employee, AcademyContext>, IEmployeeDal
     {
-        public Employee EmployeeGetByIdWithUser(int id)
-        {
-            using (AcademyContext context = new AcademyContext())
-            {
-                return context.employees.Include(i => i.User).FirstOrDefault(i => i.User.Id == id);
-            }
-        }
-        public List<Employee> GetAllWithUser()
-        {
-            using (AcademyContext context = new AcademyContext())
-            {
-                return context.employees.Include(i=> i.User).ToList();
-            }
-        }
     }
 }

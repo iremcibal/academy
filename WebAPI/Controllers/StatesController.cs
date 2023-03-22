@@ -19,10 +19,10 @@ namespace WebAPI.Controllers
             _stateService = stateService;
         }
 
-        [HttpGet]
-        public IActionResult GetList()
+        [HttpGet("GetAll")]
+        public IActionResult GetAll()
         {
-            var result = _stateService.GetList();
+            var result = _stateService.GetAll();
             return StatusCode(result.Success ? 200 : 400, result);
         }
 

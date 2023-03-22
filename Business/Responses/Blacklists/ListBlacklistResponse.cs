@@ -12,5 +12,9 @@ namespace Business.Responses.Blacklists
         public DateTime? date { get; set; }
         public string Reason { get; set; }
         public int ApplicantId { get; set; }
+        public string ApplicantAbout { get; set; }
+        public string ApplicantUserFirstName { get; set; }
+        public string ApplicantUserLastName { get; set; }
+        public string ApplicantUserEmail { get; set; }
     }
 }

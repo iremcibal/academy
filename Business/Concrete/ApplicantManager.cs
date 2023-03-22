@@ -65,15 +65,15 @@ namespace Business.Concrete
 
         public IDataResult<GetApplicantResponse> GetById(int id)
         {
-            Applicant applicant = _applicantDal.ApplicantGetByIdWithUser(id);
+            Applicant applicant = _applicantDal.Get(a=>a.Id == id,include:a=>a.Include(a=>a.User));
             var response = _mapper.Map<GetApplicantResponse>(applicant);
 
             return new SuccessDataResult<GetApplicantResponse>(response,Messages.ListedData);
         }
 
-        public IDataResult<List<ListApplicantResponse>> GetList()
+        public IDataResult<List<ListApplicantResponse>> GetAll()
         {
-            List<Applicant> applicants = _applicantDal.GetAllWithUser();
+            List<Applicant> applicants = _applicantDal.GetAll(include:a=>a.Include(a=>a.User));
             List<ListApplicantResponse> responses = _mapper.Map<List<ListApplicantResponse>>(applicants);
 
             return new SuccessDataResult<List<ListApplicantResponse>>(responses,Messages.ListedData);

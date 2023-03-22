@@ -56,7 +56,7 @@ namespace Business.Concrete
             return new SuccessDataResult<GetStateResponse>(response,Messages.ListedData);
         }
 
-        public IDataResult<List<ListStateResponse>> GetList()
+        public IDataResult<List<ListStateResponse>> GetAll()
         {
             List<State> states = _stateDal.GetAll();
             List<ListStateResponse> responses = _mapper.Map<List<ListStateResponse>>(states);

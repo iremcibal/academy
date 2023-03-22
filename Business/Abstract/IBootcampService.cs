@@ -12,7 +12,7 @@ namespace Business.Abstract
     public interface IBootcampService
     {
         IDataResult<GetBootcampResponse> GetById(int id);
-        IDataResult<List<ListBootcampResponse>> GetList();
+        IDataResult<List<ListBootcampResponse>> GetAll();
         IResult Add(CreateBootcampRequest request);
         IResult Delete(DeleteBootcampRequest request);
         IResult Update(UpdateBootcampRequest request);

@@ -16,10 +16,10 @@ namespace WebAPI.Controllers
             _userService = userService;
         }
 
-        [HttpGet]
-        public IActionResult GetList()
+        [HttpGet("GetAll")]
+        public IActionResult GetAll()
         {
-            var result = _userService.GetList();
+            var result = _userService.GetAll();
             return StatusCode(result.Success ? 200 : 400, result);
         }
 

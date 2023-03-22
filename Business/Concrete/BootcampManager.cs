@@ -9,6 +9,7 @@ using Core.Aspects;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,15 +51,15 @@ namespace Business.Concrete
 
         public IDataResult<GetBootcampResponse> GetById(int id)
         {
-            Bootcamp bootcamp = _bootcampDal.Get(b=>b.Id== id);
+            Bootcamp bootcamp = _bootcampDal.Get(b=>b.Id== id,include:b=>b.Include(b=>b.Instructor).Include(b=>b.State));
             var response = _mapper.Map<GetBootcampResponse>(bootcamp);
 
             return new SuccessDataResult<GetBootcampResponse>(response,Messages.ListedData);
         }
 
-        public IDataResult<List<ListBootcampResponse>> GetList()
+        public IDataResult<List<ListBootcampResponse>> GetAll()
         {
-            List<Bootcamp> bootcamps = _bootcampDal.GetAll();
+            List<Bootcamp> bootcamps = _bootcampDal.GetAll(include: b => b.Include(b => b.Instructor).Include(b => b.State));
             List<ListBootcampResponse> responses = _mapper.Map<List<ListBootcampResponse>>(bootcamps);
 
             return new SuccessDataResult<List<ListBootcampResponse>>(responses,Messages.ListedData);

@@ -9,6 +9,7 @@ using Core.Aspects;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,14 +55,16 @@ namespace Business.Concrete
 
         public IDataResult<GetApplicationResponse> GetById(int id)
         {
-            Application application = _applicationDal.Get(a=>a.Id== id);
+            Application application = _applicationDal.Get(a=>a.Id== id,include:a=>a.Include(a=>a.Applicant.User)
+            .Include(a=>a.Bootcamp).Include(a=>a.State));
             var response = _mapper.Map<GetApplicationResponse>(application);
             return new SuccessDataResult<GetApplicationResponse>(response,Messages.ListedData);
         }
 
-        public IDataResult<List<ListApplicationResponse>> GetList()
+        public IDataResult<List<ListApplicationResponse>> GetAll()
         {
-            List<Application> applications = _applicationDal.GetAll();
+            List<Application> applications = _applicationDal.GetAll(include: a => a.Include(a => a.Applicant.User)
+            .Include(a => a.Bootcamp).Include(a => a.State));
             List<ListApplicationResponse> responses = _mapper.Map<List<ListApplicationResponse>>(applications);
             return new SuccessDataResult<List<ListApplicationResponse>>(responses,Messages.ListedData);
         }

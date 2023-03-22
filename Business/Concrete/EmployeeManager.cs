@@ -10,6 +10,7 @@ using Core.Aspects;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,14 +66,14 @@ namespace Business.Concrete
 
         public IDataResult<GetEmployeeResponse> GetById(int id)
         {
-            Employee employee = _employeeDal.EmployeeGetByIdWithUser(id);
+            Employee employee = _employeeDal.Get(e=>e.Id ==id, include: e => e.Include(e => e.User));
             var response = _mapper.Map<GetEmployeeResponse>(employee);
             return new SuccessDataResult<GetEmployeeResponse>(response,Messages.ListedData);
         }
 
-        public IDataResult<List<ListEmployeeResponse>> GetList()
+        public IDataResult<List<ListEmployeeResponse>> GetAll()
         {
-            List<Employee> employees = _employeeDal.GetAllWithUser();
+            List<Employee> employees = _employeeDal.GetAll(include: e => e.Include(e => e.User));
             List<ListEmployeeResponse> responses = _mapper.Map<List<ListEmployeeResponse>>(employees);
             return new SuccessDataResult<List<ListEmployeeResponse>>(responses,Messages.ListedData);
         }

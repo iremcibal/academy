@@ -12,7 +12,7 @@ namespace Business.Abstract
     public interface IBlacklistService
     {
         IDataResult<GetBlacklistResponse> GetById(int id);
-        IDataResult<List<ListBlacklistResponse>> GetList();
+        IDataResult<List<ListBlacklistResponse>> GetAll();
         IResult Add(CreateBlacklistRequest request);
         IResult Delete(DeleteBlacklistRequest request);
         IResult Update(UpdateBlacklistRequest request);

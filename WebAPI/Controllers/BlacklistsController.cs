@@ -19,10 +19,10 @@ namespace WebAPI.Controllers
             _blacklistService = blacklistService;
         }
 
-        [HttpGet]
-        public IActionResult GetList()
+        [HttpGet("GetAll")]
+        public IActionResult GetAll()
         {
-            var result = _blacklistService.GetList();
+            var result = _blacklistService.GetAll();
             return StatusCode(result.Success ? 200 : 400, result);
         }
 

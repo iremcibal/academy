@@ -12,7 +12,7 @@ namespace Business.Abstract
     public interface IStateService
     {
         IDataResult<GetStateResponse> GetById(int id);
-        IDataResult<List<ListStateResponse>> GetList();
+        IDataResult<List<ListStateResponse>> GetAll();
         IResult Add(CreateStateRequest request);
         IResult Delete(DeleteStateRequest request);
         IResult Update(UpdateStateRequest request);

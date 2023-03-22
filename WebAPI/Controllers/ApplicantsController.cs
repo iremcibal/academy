@@ -17,10 +17,10 @@ namespace WebAPI.Controllers
             _applicantService = applicantService;
         }
 
-        [HttpGet]
-        public IActionResult GetList()
+        [HttpGet("GetAll")]
+        public IActionResult GetAll()
         {
-            var result = _applicantService.GetList();
+            var result = _applicantService.GetAll();
             return StatusCode(result.Success ? 200 : 400, result);
         }
 

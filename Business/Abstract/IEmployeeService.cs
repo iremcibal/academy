@@ -12,7 +12,7 @@ namespace Business.Abstract
     public interface IEmployeeService
     {
         IDataResult<GetEmployeeResponse> GetById(int id);
-        IDataResult<List<ListEmployeeResponse>> GetList();
+        IDataResult<List<ListEmployeeResponse>> GetAll();
         IResult Add(CreateEmployeeRequest request);
         IResult Delete(DeleteEmployeeRequest request);
         IResult Update(UpdateEmployeeRequest request);

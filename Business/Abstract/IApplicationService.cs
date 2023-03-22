@@ -12,7 +12,7 @@ namespace Business.Abstract
     public interface IApplicationService
     {
         IDataResult<GetApplicationResponse> GetById(int id);
-        IDataResult<List<ListApplicationResponse>> GetList();
+        IDataResult<List<ListApplicationResponse>> GetAll();
         IResult Add(CreateApplicationRequest request);
         IResult Delete(DeleteApplicationRequest request);
         IResult Update(UpdateApplicationRequest request);

@@ -55,7 +55,7 @@ namespace Business.Concrete
         }
 
         [CacheAspect(10)]
-        public IDataResult<List<ListUserResponse>> GetList()
+        public IDataResult<List<ListUserResponse>> GetAll()
         {
             List<User> users = _userDal.GetAll();
             List<ListUserResponse> responses = _mapper.Map<List<ListUserResponse>>(users);

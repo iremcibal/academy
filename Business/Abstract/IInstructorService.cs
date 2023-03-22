@@ -12,7 +12,7 @@ namespace Business.Abstract
     public interface IInstructorService
     {
         IDataResult<GetInstructorResponse> GetById(int id);
-        IDataResult<List<ListInstructorResponse>> GetList();
+        IDataResult<List<ListInstructorResponse>> GetAll();
         IResult Add(CreateInstructorRequest request);
         IResult Delete(DeleteInstructorRequest request);
         IResult Update(UpdateInstructorRequest request);

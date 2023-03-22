@@ -9,6 +9,7 @@ using Core.Aspects;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,15 +52,15 @@ namespace Business.Concrete
 
         public IDataResult<GetBlacklistResponse> GetById(int id)
         {
-            Blacklist blacklist = _blacklistDal.Get(b=>b.Id == id);
+            Blacklist blacklist = _blacklistDal.Get(b=>b.Id == id, include: b => b.Include(b => b.Applicant));
             var response = _mapper.Map<GetBlacklistResponse>(blacklist);
 
             return new SuccessDataResult<GetBlacklistResponse>(response,Messages.ListedData);
         }
 
-        public IDataResult<List<ListBlacklistResponse>> GetList()
+        public IDataResult<List<ListBlacklistResponse>> GetAll()
         {
-            List<Blacklist> blacklists = _blacklistDal.GetAll();
+            List<Blacklist> blacklists = _blacklistDal.GetAll(include: b => b.Include(b => b.Applicant.User));
             List<ListBlacklistResponse> responses = _mapper.Map<List<ListBlacklistResponse>>(blacklists);
 
             return new SuccessDataResult<List<ListBlacklistResponse>>(responses,Messages.ListedData);
