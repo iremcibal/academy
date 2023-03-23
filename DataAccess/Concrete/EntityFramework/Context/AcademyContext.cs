@@ -21,6 +21,8 @@ namespace DataAccess.Concrete.EntityFramework.Context
         public DbSet<Instructor> instructors { get; set; }
         public DbSet<State> states { get; set; }
         public DbSet<User> users { get;set; }
+        public DbSet<Image> Images { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -47,6 +49,14 @@ namespace DataAccess.Concrete.EntityFramework.Context
                 a.ToTable("applicants").HasKey("Id");
                 a.Property(u=>u.Id).HasColumnName("Id");
                 a.Property(a => a.About).HasColumnName("about");
+            });
+
+            modelBuilder.Entity<Image>(a =>
+            {
+                a.ToTable("images").HasKey("Id");
+                a.Property(u => u.Id).HasColumnName("Id");
+                a.Property(a => a.ImagePath).HasColumnName("ImagePath");
+                a.Property(a => a.Date).HasColumnName("Date");
             });
 
             modelBuilder.Entity<Application>(a =>

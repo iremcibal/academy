@@ -8,6 +8,8 @@ namespace Business.Constants
 {
     public class Messages
     {
+        internal static readonly string NotBeExist;
+        internal static readonly string AlreadyExist;
         public static string AddedData = "Veri Eklendi";
         public static string DeletedData = "Veri Silindi";
         public static string UpdatedData = "Veri Güncellendi";

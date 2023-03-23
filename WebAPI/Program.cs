@@ -7,7 +7,7 @@ using Core.DependencyResolvers;
 using Autofac.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
-
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 // Add services to the container.
 //builder.Services.AddBusinessService();
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
@@ -37,7 +37,6 @@ if (app.Environment.IsDevelopment())
 app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyOrigin());
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
 
 app.MapControllers();
