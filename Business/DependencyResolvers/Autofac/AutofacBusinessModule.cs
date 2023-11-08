@@ -14,7 +14,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using DataAccess.Concrete.EntityFramework.Context;
 using Core.Utilities.Helpers.FileHelper;
 
 namespace Business.DependencyResolvers.Autofac
@@ -32,6 +31,7 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfStateDal>().As<IStateDal>().SingleInstance();
             builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
             builder.RegisterType<EfImageDal>().As<IImageDal>().SingleInstance();
+            builder.RegisterType<EfCurriculumVitaeDal>().As<ICurriculumVitaeDal>();
 
             builder.RegisterType<ApplicantManager>().As<IApplicantService>().SingleInstance();
             builder.RegisterType<ApplicationManager>().As<IApplicationService>().SingleInstance();
@@ -42,6 +42,7 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<StateManager>().As<IStateService>().SingleInstance();
             builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
             builder.RegisterType<ImageManager>().As<IImageService>().SingleInstance();
+            builder.RegisterType<CurriculumVitaeManager>().As<ICurriculumVitaeService>();
 
             builder.RegisterType<ApplicantBusinessRules>().SingleInstance();
             builder.RegisterType<ApplicationBusinessRules>().SingleInstance();
@@ -52,6 +53,7 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<StateBusinessRules>().SingleInstance();
             builder.RegisterType<UserBusinessRules>().SingleInstance();
             builder.RegisterType<ImageBusinessRules>().SingleInstance();
+            builder.RegisterType<CVBusinessRules>().SingleInstance();
 
             builder.RegisterType<FileHelperManager>().As<IFileHelper>().SingleInstance();
 

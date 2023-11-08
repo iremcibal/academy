@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
         }
 
 
-        [HttpGet("{id}")]
+        [HttpGet("bootcampId")]
         public IActionResult GetById(int id)
         {
             var result = _bootcampService.GetById(id);

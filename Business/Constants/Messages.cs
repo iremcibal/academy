@@ -10,6 +10,8 @@ namespace Business.Constants
     {
         internal static readonly string NotBeExist;
         internal static readonly string AlreadyExist;
+        internal static readonly string CurriculumVitaeAlreadyExist;
+        internal static readonly string CurriculumVitaeNotBeExist;
         public static string AddedData = "Veri Eklendi";
         public static string DeletedData = "Veri Silindi";
         public static string UpdatedData = "Veri Güncellendi";

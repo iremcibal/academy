@@ -11,6 +11,7 @@ namespace Business.Requests.Instructors
     {
         public int Id { get; set; }
         public string CompanyName { get; set; }
+        public int cvId { get; set; }
         public CreateUserRequest CreateUser { get; set; }
     }
 }

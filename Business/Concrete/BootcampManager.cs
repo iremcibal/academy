@@ -51,7 +51,7 @@ namespace Business.Concrete
 
         public IDataResult<GetBootcampResponse> GetById(int id)
         {
-            Bootcamp bootcamp = _bootcampDal.Get(b=>b.Id== id,include:b=>b.Include(b=>b.Instructor).Include(b=>b.State));
+            Bootcamp bootcamp = _bootcampDal.Get(b=>b.Id== id,include:b=>b.Include(b=>b.Instructor.User).Include(b=>b.State).Include(b => b.Image));
             var response = _mapper.Map<GetBootcampResponse>(bootcamp);
 
             return new SuccessDataResult<GetBootcampResponse>(response,Messages.ListedData);
@@ -59,7 +59,7 @@ namespace Business.Concrete
 
         public IDataResult<List<ListBootcampResponse>> GetAll()
         {
-            List<Bootcamp> bootcamps = _bootcampDal.GetAll(include: b => b.Include(b => b.Instructor).Include(b => b.State));
+            List<Bootcamp> bootcamps = _bootcampDal.GetAll(include: b => b.Include(b => b.Instructor.User).Include(b => b.State).Include(b=>b.Image));
             List<ListBootcampResponse> responses = _mapper.Map<List<ListBootcampResponse>>(bootcamps);
 
             return new SuccessDataResult<List<ListBootcampResponse>>(responses,Messages.ListedData);

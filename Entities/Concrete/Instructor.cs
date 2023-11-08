@@ -12,6 +12,8 @@ namespace Entities.Concrete
     {
         public int Id { get; set; }
         public string CompanyName { get; set; }
+        public int CurriculumVitaeId { get; set; }
+        public CurriculumVitae CurriculumVitae { get; set; }
 
         [ForeignKey("Id")]
         public virtual User User { get; set; }

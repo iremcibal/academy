@@ -22,6 +22,7 @@ namespace DataAccess.Concrete.EntityFramework.Context
         public DbSet<State> states { get; set; }
         public DbSet<User> users { get;set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<CurriculumVitae> curriculumVitaes { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -90,8 +91,10 @@ namespace DataAccess.Concrete.EntityFramework.Context
                 b.Property(b => b.EndDate).HasColumnName("end_date");
                 b.Property(b => b.StateId).HasColumnName("state_id");
                 b.Property(b => b.InstructorId).HasColumnName("instructor_id");
+                b.Property(b => b.ImageId).HasColumnName("images_id");
                 b.HasOne(b => b.State);
                 b.HasOne(b => b.Instructor);
+                b.HasOne(b => b.Image);
             });
 
             modelBuilder.Entity<Employee>(e =>
@@ -106,6 +109,8 @@ namespace DataAccess.Concrete.EntityFramework.Context
                 i.ToTable("instructors").HasKey("Id");
                 i.Property(i => i.Id).HasColumnName("id");
                 i.Property(i => i.CompanyName).HasColumnName("company_name");
+                i.Property(i => i.CurriculumVitaeId).HasColumnName("cvId");
+                i.HasOne(i => i.CurriculumVitae);
             });
 
             modelBuilder.Entity<State>(s =>
@@ -115,7 +120,17 @@ namespace DataAccess.Concrete.EntityFramework.Context
                 s.Property(s => s.Info).HasColumnName("info");
             });
 
-         
+            modelBuilder.Entity<CurriculumVitae>(s =>
+            {
+                s.ToTable("curriculumVitae").HasKey("Id");
+                s.Property(s => s.Id).HasColumnName("id");
+                s.Property(s => s.UniversityName).HasColumnName("universityName");
+                s.Property(s => s.LicanceDegree).HasColumnName("LicanceDegree");
+                s.Property(s => s.Skills).HasColumnName("Skills");
+
+            });
+
+
         }
     }
 }

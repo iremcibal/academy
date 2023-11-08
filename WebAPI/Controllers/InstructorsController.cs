@@ -24,10 +24,10 @@ namespace WebAPI.Controllers
         }
 
 
-        [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        [HttpGet("instructorId")]
+        public IActionResult GetById(int instructorId)
         {
-            var result = _instructorService.GetById(id);
+            var result = _instructorService.GetById(instructorId);
             return StatusCode(result.Success ? 200 : 400, result);
         }
 

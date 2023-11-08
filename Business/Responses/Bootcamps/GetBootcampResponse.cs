@@ -14,8 +14,10 @@ namespace Business.Responses.Bootcamps
         public DateTime EndDate { get; set; }
         public int InstructorId { get; set; }
         public int StateId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Info { get; set; }
+        public int ImageId { get; set; }
+        public string ImageImagePath { get; set; }
+        public string InstructorUserFirstName { get; set; }
+        public string InstructorUserLastName { get; set; }
+        public string StateInfo { get; set; }
     }
 }

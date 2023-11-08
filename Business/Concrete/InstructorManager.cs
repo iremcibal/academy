@@ -64,14 +64,14 @@ namespace Business.Concrete
 
         public IDataResult<GetInstructorResponse> GetById(int id)
         {
-            Instructor ınstructor = _instructorDal.Get(i=>i.Id== id,include:i=>i.Include(i=>i.User));
+            Instructor ınstructor = _instructorDal.Get(i=>i.Id== id,include:i=>i.Include(i=>i.User).Include(i => i.CurriculumVitae));
             var response = _mapper.Map<GetInstructorResponse>(ınstructor);
             return new SuccessDataResult<GetInstructorResponse>(response,Messages.ListedData);
         }
 
         public IDataResult<List<ListInstructorResponse>> GetAll()
         {
-            List<Instructor> ınstructors = _instructorDal.GetAll(include: i => i.Include(i => i.User));
+            List<Instructor> ınstructors = _instructorDal.GetAll(include: i => i.Include(i => i.User).Include(i=>i.CurriculumVitae));
             List<ListInstructorResponse> responses = _mapper.Map<List<ListInstructorResponse>>(ınstructors);
             return new SuccessDataResult<List<ListInstructorResponse>>(responses,Messages.ListedData);
         }
